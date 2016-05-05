@@ -1,0 +1,30 @@
+int tempPin = A0;
+int led = 1;
+float temperature, reading;
+float maxTemp = 20;
+ 
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(tempPin, INTPUT);
+  pinMode(led, OUTPUT);
+}
+ 
+void loop()
+{
+ temperature = readTemp();
+if (temperature < maxTemp){
+	digitalWrite(led, HIGH);
+	delay(300);
+	}
+	else{
+	digitalWrite(led, LOW);
+	delay(300);
+	}
+ }
+
+float readTemp()
+{
+reading = analogREad(tempPin);
+return reading * 0.48828125;
+}
