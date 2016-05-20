@@ -1,0 +1,32 @@
+#include <VirtualWire.h>
+#include <DHT.h>
+
+#define dhtPin 4
+#define dhtType DHT11
+#define txPowerPin 8
+
+DHT dht(dhtPin, dhtType);
+
+char msg0[3];
+int tem = 0;
+int hum = 0;
+
+void setup() {
+  pinMode(txPowerPin, OUTPUT);
+  pinMode(txPowerPin, LOW);
+  vw_setup(4800);    
+  vw_set_tx_pin(9);  
+}
+
+void loop() {
+  digitalWrite(txPowerPin, HIGH);  
+  tem = dht.readTemperature();  
+  itoa(tem, msg0, 10);  
+  strcat(msg0);                 
+  vw_send((uint8_t *)msg0, strlen(msg0));
+  vw_wait_tx();                         
+  
+  digitalWrite(txPowerPin, LOW);
+ 
+  delay(5000);                          
+}
