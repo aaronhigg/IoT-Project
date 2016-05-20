@@ -1,0 +1,43 @@
+#include <VirtualWire.h>
+#include <LiquidCrystal.h>
+
+#define RS 9
+#define E 10
+#define D4 5
+#define D5 6
+#define D6 7
+#define D7 8
+
+LiquidCrystal lcd(RS, E, D4, D5, D6, D7);
+
+int tem = 0;
+int i;
+int tempPin = A0;
+int led = 1;
+float temperature, reading;
+float maxTemp = 20;
+
+void setup() {
+  Serial.begin(9600);      
+  pinMode(tempPin, INTPUT);
+  pinMode(led, OUTPUT);
+  vw_setup(4800);          
+  vw_rx_start();           
+  vw_set_rx_pin(2);                                     
+}
+
+void loop() {
+  uint8_t buf[VW_MAX_MESSAGE_LEN]; 
+  uint8_t buflen = VW_MAX_MESSAGE_LEN;  
+  if (vw_get_message(buf, &buflen))   
+  {
+   if (buf < max temp){
+    digitalWrite(led, HIGH);
+    delay(300);
+   }
+   else{
+   digitalWrite(led, LOW);
+   delay(300);
+   }
+  }
+}
